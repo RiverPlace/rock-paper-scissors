@@ -8,7 +8,7 @@ function computerPlay() {
 function playRound(playerSelection, computerPlay) {
     if (!choices.includes(playerSelection)) {
         console.log('Incorrect choice. Please try again.')
-        return;
+        // Fix this so 
     }
 
     if ((playerSelection == 'rock' && computerPlay == 'scissors') || 
@@ -27,10 +27,13 @@ function game() {
     computerWins = 0;
 
     for (let i = 0; i < 5; i++) {
-        const player = prompt("Please choose 'rock', 'paper', or 'scissors'.");
+        let player = '';
+        while (!choices.includes(player)) {
+            player = prompt("Please choose 'rock', 'paper', or 'scissors'.");
+        }
         const computer = computerPlay();
+        
         let winner = playRound(player, computer); 
-
         if (winner == 'player') {
             playerWins++;
         } else {
