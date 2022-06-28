@@ -50,3 +50,12 @@ function game() {
 }
 
 game();
+
+// SCRUM: framework for getting work done. New features / products are released through sprints:
+//  - All about continuous learning, adapting to market conditions and user requirements
+//  - Our sprints are about a month...
+//  - We do: planning, reviews, and retros sometimes (we don't currenty do daily standup - devs in different countries... )
+
+/* Notes
+- 
+*/
