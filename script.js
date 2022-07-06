@@ -1,61 +1,60 @@
 const choices = ['rock', 'paper', 'scissors'];
+const buttons = document.getElementsByClassName('button');
+const alert = document.getElementById('alert');
+const playerScoreEl = document.getElementById('player-score');
+const computerScoreEl = document.getElementById('computer-score');
+let playerScore = 0;
+let computerScore = 0;
 
-function computerPlay() {
+function computerSelection() {
     let choice = choices[Math.floor(Math.random() * choices.length)];
     return choice;
 }
 
-function playRound(playerSelection, computerPlay) {
-    if (!choices.includes(playerSelection)) {
-        console.log('Incorrect choice. Please try again.')
-        // Fix this so 
-    }
-
-    if ((playerSelection == 'rock' && computerPlay == 'scissors') || 
-        (playerSelection == 'paper' && computerPlay == 'rock') || 
-        (playerSelection == 'scissors' && computerPlay == 'paper')) {
-            console.log(`Player wins! ${playerSelection} beats ${computerPlay}`);
-            return 'player';
-    }
-    
-    console.log(`Computer wins! ${computerPlay} beats ${playerSelection}`);
-    return 'computer';
-}
-
-function game() {
-    playerWins = 0;
-    computerWins = 0;
-
-    for (let i = 0; i < 5; i++) {
-        let player = '';
-        while (!choices.includes(player)) {
-            player = prompt("Please choose 'rock', 'paper', or 'scissors'.");
-        }
-        const computer = computerPlay();
-        
-        let winner = playRound(player, computer); 
-        if (winner == 'player') {
-            playerWins++;
-        } else {
-            computerWins++;
-        }
-    }
-
-    if (playerWins > computerWins) {
-        console.log(`Player wins the game! ${playerWins} to ${computerWins}`);
+function playRound(playerSelection, computerSelection) {
+    if (playerSelection === computerSelection) {
+        alert.textContent = `Tie! Play again.`;
+        alert.style.color = '#444';
         return;
     }
-
-    console.log(`Computer wins! ${computerWins} to ${playerWins}`);
+    if ((playerSelection == 'rock' && computerSelection == 'scissors') || 
+        (playerSelection == 'paper' && computerSelection == 'rock') || 
+        (playerSelection == 'scissors' && computerSelection == 'paper')) {
+            alert.textContent = `You won! ${playerSelection} beats ${computerSelection}.`;
+            alert.style.color = '#63B882';
+            playerScore += 1;
+            playerScoreEl.textContent = playerScore;
+            determineWinner();
+            return;
+    }
+    
+    alert.textContent = `Computer wins... ${computerSelection} beats ${playerSelection}.`;
+    alert.style.color = '#F2525D';
+    computerScore += 1;
+    computerScoreEl.textContent = computerScore;
+    determineWinner();
 }
 
-game();
+function determineWinner() {
+    if (playerScore === 5) {
+        alert.textContent = `You won - ${playerScore} to ${computerScore}! Click above to start a new game.`;
+        resetGame();
+    }
+    else if (computerScore === 5) {
+        alert.textContent = `Computer wins... ${computerScore} to ${playerScore}. Click above to start a new game.`; 
+        resetGame();
+    };
+}
 
-// SCRUM: framework for getting work done. New features / products are released through sprints:
-//  - All about continuous learning, adapting to market conditions and user requirements
-//  - Our sprints are about a month...
-//  - We do: planning, reviews, and retros sometimes (we don't currenty do daily standup - devs in different countries... )
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    playerScoreEl.textContent = playerScore;
+    computerScoreEl.textContent = computerScore;
+}
 
-/* Notes
-- 
-*/
+for (const button of buttons) {
+    button.addEventListener('click', (e) => {
+        playRound(e.target.id, computerSelection());
+    });
+}
